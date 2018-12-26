@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import PropTypes from 'prop-types';
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
+import BankContract from "./contracts/BankContract.json";
 
 import "./App.css";
-import Bank from './Bank';
+import Bank from './component/Bank';
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { web3: null, accounts: null, contract: null, balance: 10000};
+
+  static propTypes = {
+    balance: PropTypes.number
+  }
 
   componentDidMount = async () => {
     try {
@@ -17,14 +22,10 @@ class App extends Component {
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
 
-      // Get the contract instance.
-      const Contract = truffleContract(SimpleStorageContract);
-      Contract.setProvider(web3.currentProvider);
-      const instance = await Contract.deployed();
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      // Set web3, accounts 
+      this.setState({ web3, accounts});
+      console.log(this.state);
+      console.log("balance : " + await web3.eth.getBalance(accounts[0]));
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -34,25 +35,40 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
-
-    // Stores a given value, 5 by default.
-    await contract.set(10, { from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    const response = await contract.get();
-
-    // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
-  };
-
-  input_todo = async (e) => {
-    const { contract } = this.state;
-
-    await contract.inputTodo()
-    console.log(e);
+  login = async () => {
+    try{
+      // Get the contract instance.
+      const Contract = truffleContract(BankContract);
+      Contract.setProvider(this.state.web3.currentProvider);
+      const instance = await Contract.deployed();
+      this.setState({
+        contract: instance
+      });
+    } catch(error) {
+      console.log(error);
+    }
+    console.log(await this.state);
   }
+
+  handleDeposit = (amount) => {
+    this.setState({
+      balance: this.state.balance + amount
+    });
+    
+    setTimeout(() => this.getBalance(), 10);
+    this.login();
+  }
+
+  handleWithdraw = (amount) => {
+    this.setState({
+      balance: this.state.balance - amount
+    });
+    
+    setTimeout(() => this.getBalance(), 10);
+  }
+
+  getBalance = () => console.log(this.state.balance) ;
+
 
   render() {
     if (!this.state.web3) {
@@ -60,7 +76,12 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Bank></Bank>
+        <Bank 
+          handleDeposit={this.handleDeposit} 
+          handleWithdraw={this.handleWithdraw} 
+          balance={this.state.balance}
+          login={this.login}
+        ></Bank>
       </div>
     );
   }
