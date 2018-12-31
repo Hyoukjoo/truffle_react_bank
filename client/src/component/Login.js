@@ -6,9 +6,6 @@ class Login extends React.Component {
     this.hash = React.createRef();
   }
 
-  login= () => {
-    this.props.login();
-  }
   render(){
     return(
       <div className="Login">
