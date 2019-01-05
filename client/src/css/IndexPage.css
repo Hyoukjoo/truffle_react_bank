@@ -1,0 +1,39 @@
+#title {
+  position: relative;
+  font-size: 80px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 10%;
+  margin-bottom: 0%;
+}
+
+#subTitle {
+  margin: 0%;
+}
+
+.hole {
+  margin-top: 10%;
+  margin-right: auto;
+  margin-left: auto;
+  width: 150px;
+  height: 3px;
+  border: 2px solid black;
+}
+
+.card {
+  display: table;
+  margin-top: 2%;
+  margin-right: auto;
+  margin-left: auto;
+  width: 150px;
+  height: 200px;
+  border: 2px solid black;
+  background-color: rgb(190, 184, 181)
+}
+
+.card span {
+  display: table-cell;
+  vertical-align: bottom;
+  padding: 5%;
+  font-size: 40px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

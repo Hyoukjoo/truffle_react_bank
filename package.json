@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "graphql": "^14.0.2",
+    "react-router-dom": "^4.3.1"
+  }
+}
