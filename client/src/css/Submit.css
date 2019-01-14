@@ -1,0 +1,56 @@
+.checkAmount {
+  display: inline-block;
+  margin-top: 80px;
+  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.amount {
+  display: inline-table;
+  text-align: left;
+  margin-top: 25px;
+  padding-left: 5%;
+  width: 300px;
+  height: 75px;
+  background-color: white;
+  border-bottom: 5px solid black;
+}
+
+.amount span {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 50px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.submitDiv {
+  display: inline-table;
+  margin-top: 20%;
+}
+
+.submit {
+  display: table-cell;
+  vertical-align: middle;
+  margin: 5px;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.confirmButton {
+  background-color: rgb(76, 218, 88);
+}
+
+.cancelButton {
+  background-color: rgb(231, 64, 64);
+}
+
+.submit span {
+  text-align: center;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 30px;
+}
+
+.space {
+  width: 25px;
+}

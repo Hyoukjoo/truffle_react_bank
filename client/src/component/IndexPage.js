@@ -1,30 +1,31 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import '../css/IndexPage.css'
 
 class IndexPage extends Component {
-  _isLoginInfo = () => {
-    //Check loginInfo 
-    if(this.props.info.contract === null) return false 
-    else return true
-  }
-
   render(){
     return(
-      <div className="article">
-        <p id="title">ATM</p>
-        <p id="subTitle">BY BLOCKCHAIN</p>
+      <div className="indexPage">
+        <p className="title">ATM</p>
+        <p className="subTitle">BY BLOCKCHAIN</p>
         <div className='login'>
           <div className="hole"></div>
-          <div className="card" onClick={()=>this.props.login()}><span>CARD</span></div>
+          <div className="card" onClick={this.props.login}>
+            <div className="arrow">↑</div>
+            <span>CARD</span>
+          </div>
         </div>
-        {/* {this._isLoginInfo()
-          ? <div onClick={()=>this.props.logout()}>LOGOUT</div>
-          : <div onClick={()=>this.props.login()}>LOGIN</div>
-        } */}
+        {/* <div className="pull">
+          {this.props.info.contract &&
+            <div onClick={this.props.logout}>
+              <span>카드 빼기</span>
+            </div>
+          }
+        </div> */}
       </div>
     )
   }
 }
 
-export default IndexPage
+export default withRouter(IndexPage)

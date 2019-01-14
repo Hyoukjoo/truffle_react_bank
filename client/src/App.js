@@ -1,20 +1,23 @@
 import React, { Component } from 'react'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+
 import getWeb3 from './utils/getWeb3'
 import truffleContract from 'truffle-contract'
 import ATM from './contracts/ATM.json'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import Bank from './contracts/Bank.json'
 
-import Deposit from './component/Deposit'
 import IndexPage from './component/IndexPage'
-import Withdraw from './component/Withdraw';
+import ListPage from './component/ListPage'
+import InputMoney from './component/InputMoney'
+import Submit from './component/Submit'
+import OutputMoney from './component/OutputMoney'
+import Statement from './component/Statement'
 
 import "./css/App.css"
-import { Header } from './component/Header';
-import ListPage from './component/ListPage';
 
 class App extends Component {
-  state = { web3: null, accounts: null, contract: null, balance: 0};
+  state = { web3: null, accounts: null, contract: null, balance: 0}
 
   static propTypes = {
     balance: PropTypes.number
@@ -28,22 +31,25 @@ class App extends Component {
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts()
 
+      const Contract = truffleContract(Bank)
+      Contract.setProvider(this.state.web3.currentProvider)
+      const instance = await Contract.deployed()
+
       // Set web3, accounts in state
-      this.setState({ web3, accounts })
+      this.setState({ web3, accounts, instance })
 
       //Initailize loginInfo in localStorage
       if(this.state.contract === null) localStorage.removeItem('loginInfo')
 
-      console.log(this.state)
-
+      localStorage.clear()
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
-      );
+      )
       console.log(error)
     }
-  };
+  }
 
   _login = async () => {
     try{
@@ -62,21 +68,20 @@ class App extends Component {
       localStorage.setItem('loginInfo', instance.address)
       localStorage.setItem('balance', this.state.balance)
 
-      this.props.history.push(`/`)
+      this.props.history.push('/listpage')
     } catch(error) {
       console.log(error);
     }
-    console.log(await this.state)
   }
 
   _logout = () => {
-    //set null at contract in state
-    this.setState({
-      contract: null,
-    })
+    //Set null at contract in state
+    this.setState({ contract: null, balance: 0 })
 
-    //Remove loginInfo in localStorage
-    localStorage.removeItem('loginInfo')
+    //Clear localStorage
+    localStorage.clear()
+
+    this.props.history.push('/')
   }
 
   render() {
@@ -85,33 +90,30 @@ class App extends Component {
     }
     return (
       <div className="App">
-        {this.props.history.location.pathname !== '/' && <Header />}
-        <Switch className='article'>
-          <Route 
-            exact path='/' 
-            render={() => (
-              <IndexPage 
-                info={this.state} 
-                login={this._login} 
-                logout={this._logout}
-              />
-            )} 
+        <Switch>
+          <Route
+            exact path='/'
+            render={() => (<IndexPage info={this.state} login={this._login} />)}
           />
           <Route 
-            exact path="/listPage" 
-            componnet={ListPage}
+            path="/listpage" 
+            render={() => (<ListPage info={this.state} logout={this._logout} />)} 
           />
           <Route 
-            exact path='/deposit' 
-            render={() => (<Deposit info={this.state} />)} 
+            path='/inputmoney' 
+            render={() => (<InputMoney logout={this._logout} />)} 
+          />
+          <Route path='/outputmoney'
+            render={() => (<OutputMoney logout={this._logout} />)} />
+          <Route 
+            path='/submit/:purpose' 
+            render={() => (<Submit info={this.state} logout={this._logout} />)} 
           />
           <Route 
-            exact path='/withdraw' 
-            render={() => (<Withdraw info={this.state} />)} 
+            path='/statement/:purpose' 
+            render={() => (<Statement contract={this.state.contract} logout={this._logout} />)} 
           />
-          <Route exact path='/transfer' component={IndexPage} />
         </Switch>
-        {/* <Footer contract={this.state.contract} /> */}
       </div>
     );
   }

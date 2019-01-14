@@ -1,0 +1,27 @@
+.numberDiv{
+  display: inline-block;
+  margin-top: 20px;
+  width: 325px;
+  height: 30px;
+}
+
+.number{
+  display: inline-table;
+  margin-bottom: 10px;
+  width: 100px;
+  height: 40px;
+  background-color: rgb(149, 168, 179);
+  cursor: pointer;
+}
+
+.number span {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 25px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.middle{
+  margin-right: 12.5px;
+  margin-left: 12.5px;
+}

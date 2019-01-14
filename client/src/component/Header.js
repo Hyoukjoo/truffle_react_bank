@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 
 import '../css/Header.css'
 
-export const Header = () => {
-  return (
-    <div className='Header'>
-      <div className='back'>BACK</div>
-      <div className='title'>
-        {localStorage.getItem('pageInfo') === 'deposit' && 
-          <span>DEPOSIT</span>
-        }
-        {localStorage.getItem('pageInfo') === 'withdraw' && 
-          <span>WITHDRAW</span>
-        }
+class Header extends Component {
+  render(){
+    return (
+      <div className='Header'>
+        <div className='back'><Link to="#" onClick={this.props.history.goBack}>뒤로</Link></div>
+        <div className='title'>
+        </div>
+        <div className='home'><Link to="/listpage">처음</Link></div>
       </div>
-      <div className='home'>HOME</div>
-    </div>
-  )
+    )
+  }
 }
+
+export default withRouter(Header)

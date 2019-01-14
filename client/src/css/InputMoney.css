@@ -1,0 +1,84 @@
+.billDiv {
+  display: inline-block;
+  width: 300px;;
+
+}
+
+.bill {
+  margin: 5px;
+  width: 150px;
+  height: 60px;
+  display: inline-table; 
+}
+
+.bill span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.billBox {
+  margin-bottom: 10px;
+  width: 300px;
+  height: 50px;
+}
+
+.billSide {
+  display: inline-table;
+  width: 33px;
+  margin: 5px;
+  border-radius: 50%;
+  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+  cursor: pointer;
+}
+
+.add {
+  margin-right: 20px;
+  border: 3px solid rgb(83, 172, 250);
+  color: rgb(83, 172, 250);
+}
+
+.center {
+  display: inline-table;
+  width: 150px;
+  height: 50px;
+  opacity: 0.85;
+}
+
+.sub {
+  margin-left: 20px;
+  border: 3px solid rgb(245, 108, 108);
+  color: rgb(245, 108, 108);
+}
+
+.billBox span {
+  display: table-cell;  
+  vertical-align: middle;
+  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.fifty {
+  background-color: rgb(233, 192, 59);
+}
+
+.ten {
+  background-color: rgb(155, 231, 152);
+}
+
+.five {
+  background-color: rgb(236, 169, 148);
+}
+
+.one {
+  background-color: rgb(152, 200, 231);
+}
+
+.billSubmit {
+  margin-top: 20px;
+  background-color: rgb(166, 168, 170);
+  cursor: pointer;
+}

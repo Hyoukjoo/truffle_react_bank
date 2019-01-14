@@ -1,14 +1,35 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+
+import '../css/ListPage.css'
 
 class ListPage extends Component {
+
+  _redirectLogin = () => {
+    console.log('Login Please!')
+    return <Redirect to='/' />
+  }
+
   render(){
     return (
-      <div>
-        <Link to="/deposit">입금하기</Link>
-        <Link to="/deposit">출금하기</Link>
-        <Link to="/deposit">송금하기</Link>
-        <Link to="/deposit">조회하기</Link>
+      <div className="ListPage">
+        {!this.props.info.contract && this._redirectLogin()}
+
+        <div className="list">
+          <Link to="/inputmoney">입  금</Link>
+        </div>
+        <div className="list">
+          <Link to="/outputmoney">출  금</Link>
+        </div>
+        <div className="list">
+          <Link to="/">송  금</Link>
+        </div>
+        <div className="list">
+          <Link to="/">조  회</Link>
+        </div>
+        <div className="list pull">
+          <Link to="#" onClick={this.props.logout}>취  소</Link>
+        </div>
       </div>
     )
   }

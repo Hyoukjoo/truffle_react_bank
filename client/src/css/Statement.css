@@ -1,0 +1,27 @@
+.statementDiv {
+  display: inline-block;
+  margin-top: 74px;
+  width: 250px;
+  height: 350px;
+  border: 1px solid black;
+}
+
+.statementTitle {
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 40px;
+  border-bottom: 1px solid black;
+}
+
+.statementItem {
+  display: inline-block;
+  text-align: left;
+  word-break: break-all;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 210px;
+  font-size: 15px;
+
+}

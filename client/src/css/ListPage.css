@@ -1,0 +1,40 @@
+.ListPage {
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 50px;
+  width: 200px;
+
+}
+
+.list {
+  display: inline-table;
+  width: 200px;
+  height: 60px;
+  background-color: rgb(181, 228, 224);
+  margin-top: 17px;
+}
+
+.list a {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 33px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.list a:link { 
+  color: black;
+  text-decoration: none; 
+}
+
+.list a:visited { 
+  color: black;
+  text-decoration: none; 
+}
+
+.list a:hover {
+  color: rgb(133, 133, 133);
+}
+
+.pull {
+  background-color: rgb(207, 89, 89)
+}

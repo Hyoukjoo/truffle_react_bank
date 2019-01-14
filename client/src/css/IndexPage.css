@@ -1,39 +1,83 @@
-#title {
+.indexPage {
+  position: absolute;
+  width: 100%;
+}
+
+.title {
   position: relative;
   font-size: 80px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  margin-top: 10%;
+  margin-top: 50px;
   margin-bottom: 0%;
 }
 
-#subTitle {
+.subTitle {
+  height: 20px;
   margin: 0%;
 }
 
+.login {
+  display: inline-block;
+  width: 150px;
+  height: 250px;
+  cursor: pointer;
+}
 .hole {
-  margin-top: 10%;
+  margin-top: 27px;
   margin-right: auto;
   margin-left: auto;
   width: 150px;
   height: 3px;
-  border: 2px solid black;
+  border: 2px solid rgb(0, 0, 0);
 }
 
 .card {
   display: table;
-  margin-top: 2%;
+  margin-top: 10px;
   margin-right: auto;
   margin-left: auto;
   width: 150px;
   height: 200px;
-  border: 2px solid black;
+  border: 2px solid rgb(102, 98, 98);
   background-color: rgb(190, 184, 181)
+}
+
+.arrow {
+  display: table-row;
+  text-align: right;
+  margin-right: 10px;
+  font-size: 30px;
+  width: 150px;
+  height: 30px;
 }
 
 .card span {
   display: table-cell;
   vertical-align: bottom;
   padding: 5%;
+  width: 150px;
+  height: 170px;
   font-size: 40px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.pull {
+  display: inline-table;;
+  height: 40px;
+  text-align: center;
+}
+
+.pull div {
+  margin-top: 20px;
+  padding-top: 5px;
+  background-color: rgb(230, 62, 62);
+  width: 150px;
+  height: 35px;
+  border: 3px solid rgb(212, 104, 104);
+  border-bottom: 0px;
+}
+
+.pull span {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 25px;
 }

@@ -1,6 +1,7 @@
-var ATM = artifacts.require("./ATM.sol")
+// var ATM = artifacts.require("./ATM.sol")
+const Bank = artifacts.require('./Bank.sol')
 
 module.exports = function(deployer) {
-  let ownerAddress = web3.eth.accounts[0]
-  deployer.deploy(ATM, ownerAddress)
+  // let ownerAddress = web3.eth.accounts[0]
+  deployer.deploy(Bank)
 }
