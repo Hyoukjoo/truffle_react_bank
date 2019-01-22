@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import '../css/Statement.css'
 
@@ -40,15 +40,10 @@ class Statement extends Component {
     this.setState({ time : `${year}.${month}.${day} ${hours}:${minutes}:${seconds}` })
   }
 
-  _redirectLogin = () => {
-    console.log('고객 정보가 없습니다.')
-    return <Redirect to='/' />
-  }
-
   render() {
     return(
       <div className='statementDiv'>
-        {this.props.contract === null && <Redirect to='/' />}
+        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
 
         <div className='statementTitle'><span>명세서</span></div>
         <div className='statementItem'>구분 : {this.props.match.params.purpose === 'deposit' ? '입금' : '출금'}</div>

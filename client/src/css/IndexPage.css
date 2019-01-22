@@ -18,34 +18,34 @@
 
 .login {
   display: inline-block;
-  width: 150px;
-  height: 250px;
-  cursor: pointer;
+  width: 500px;
 }
 .hole {
-  margin-top: 27px;
+  text-align: center;
+  margin-top: 40px;
   margin-right: auto;
   margin-left: auto;
-  width: 150px;
-  height: 3px;
+  width: 350px;
+  height: 20px;
   border: 2px solid rgb(0, 0, 0);
 }
 
 .card {
   display: table;
-  margin-top: 10px;
+  margin-top: 25px;
   margin-right: auto;
   margin-left: auto;
-  width: 150px;
-  height: 200px;
-  border: 2px solid rgb(102, 98, 98);
-  background-color: rgb(190, 184, 181)
+  width: 300px;
+  height: 150px;
+  border: 2px solid rgb(104, 59, 32);
+  background-color: rgb(245, 95, 20);
+  cursor: pointer;
 }
 
 .arrow {
   display: table-row;
   text-align: right;
-  margin-right: 10px;
+  font-weight: 900;
   font-size: 30px;
   width: 150px;
   height: 30px;
@@ -56,8 +56,8 @@
   vertical-align: bottom;
   padding: 5%;
   width: 150px;
-  height: 170px;
-  font-size: 40px;
+  height: 120px;
+  font-size: 35px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 

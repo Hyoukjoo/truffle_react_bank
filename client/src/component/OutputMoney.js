@@ -33,6 +33,8 @@ class OutputMoney extends Component {
   render() {
     return (
       <div>
+        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
+
         <p style={{ 
           display:"inline-block", 
           marginTop: "20px", marginBottom:"0", 

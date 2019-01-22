@@ -1,25 +1,24 @@
 import React, { Component } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import '../css/ListPage.css'
 
 class ListPage extends Component {
 
-  _redirectLogin = () => {
-    console.log('Login Please!')
-    return <Redirect to='/' />
+  componentDidUpdate = () => {
+    console.log("Listpage_componentUpdate :", this.props.info)
   }
 
   render(){
     return (
       <div className="ListPage">
-        {!this.props.info.contract && this._redirectLogin()}
+        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
 
         <div className="list">
           <Link to="/inputmoney">입  금</Link>
         </div>
         <div className="list">
-          <Link to="/outputmoney">출  금</Link>
+          <Link to="/checkpassword">출  금</Link>
         </div>
         <div className="list">
           <Link to="/">송  금</Link>
@@ -35,4 +34,4 @@ class ListPage extends Component {
   }
 }
 
-export default ListPage
+export default withRouter(ListPage)

@@ -14,63 +14,60 @@ contract Bank {
         uint balanceOf;
     }
     
-    event SetUser (address _userAddr);
-    event FailSetUser (address _userAddr);
-    event InitUser (address user);
-    
     modifier onlyOwner() { require(msg.sender == bank); _; }
-    modifier onlyUser(address _userAddr) { 
-        require(account[_userAddr].etherAccount == _userAddr); 
-        _; 
-        emit FailSetUser(_userAddr);
-    }
     
     constructor() public{
         bank = msg.sender;
     }
     
-    function addUser(Account memory _AccountInfo) public onlyOwner {
-        if(account[_AccountInfo.etherAccount].etherAccount == _AccountInfo.etherAccount) revert();
+    function addUser(string _userBank, string _userName, string _password, address _etherAccount, uint _balanceOf) public onlyOwner {
+        if(account[_etherAccount].etherAccount == _etherAccount) revert();
         
-        account[_AccountInfo.etherAccount].userBank = _AccountInfo.userBank;
-        account[_AccountInfo.etherAccount].userName = _AccountInfo.userName;
-        account[_AccountInfo.etherAccount].password = _AccountInfo.password;
-        account[_AccountInfo.etherAccount].etherAccount = _AccountInfo.etherAccount;
-        account[_AccountInfo.etherAccount].balanceOf = _AccountInfo.balanceOf;
+        account[_etherAccount] = Account({
+            userBank : _userBank, 
+            userName : _userName, 
+            password : _password, 
+            etherAccount : _etherAccount, 
+            balanceOf : _balanceOf
+        });
     }
     
-    function setUser(address _user) public {
+    function setUser(address _user) public onlyOwner {
         user = _user;
     } 
     
-    function initUser() public {
+    function getUser() public onlyOwner view returns (string) {
+        return account[user].userName;
+    }
+    
+    function initUser() public onlyOwner {
         user = address(0x0);
     }
     
     function getBalance() public onlyOwner view returns (uint) {
-        return Bank.account[user].balanceOf;
+        return account[user].balanceOf;
     }
     
     function deposit(uint _amount) public onlyOwner {
         require(_amount > 0);
-        Bank.account[user].balanceOf += _amount;
+        account[user].balanceOf += _amount;
     }
     
     function withdraw(uint _amount) public onlyOwner {
         require(_amount > 0);
-        require(Bank.account[user].balanceOf > _amount);
-        Bank.account[user].balanceOf -= _amount;
+        require(account[user].balanceOf > _amount);
+        account[user].balanceOf -= _amount;
     }
     
-    function checkPassword(string memory _password) public view {
+    function checkPassword(string memory _password) public onlyOwner view {
         if(keccak256(Bank.account[user].password) != keccak256(_password)) revert();
     }
     
-    function remit(uint _amount, address _receiver) public {
+    function remit(uint _amount, address _receiver) public onlyOwner {
         require(_amount > 0);
-        require(Bank.account[user].balanceOf > _amount);
-        Bank.account[user].balanceOf -= _amount;
-        Bank.account[_receiver].balanceOf += _amount;
+        require(Bank.account[user].balanceOf >= _amount);
+        account[user].balanceOf -= _amount;
+        account[_receiver].balanceOf += _amount;
     }
 }
 

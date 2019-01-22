@@ -72,6 +72,8 @@ class InputMoney extends Component {
     return (
       <div>
         <div className="billDiv">
+          {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
+
           <p style={{ 
             marginBottom:"40px", 
             fontSize:"30px", 

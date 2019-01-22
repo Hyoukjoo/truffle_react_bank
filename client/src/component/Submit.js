@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import '../css/Submit.css'
 
@@ -32,11 +32,6 @@ class Submit extends Component {
     this.setState({ sum: sum })
   }
 
-  componentWillUnmount = () => {
-    this._initLocalStorage()
-  }
-
-
   _submit = async () => {
     const amount = this.state.sum
     
@@ -64,11 +59,6 @@ class Submit extends Component {
       }
   }
 
-  _redirect = () => {
-    console.log('고객 정보가 없습니다.')
-    return <Redirect to='/' />
-  }
-
   _checkPurpose = () => {
     switch (this.props.match.params.purpose) {
       case 'deposit': return "입금할 금액이 맞습니까 ?"
@@ -77,22 +67,10 @@ class Submit extends Component {
     }
   }
 
-  _initLocalStorage = () => {
-    //Initialize input amount in localStorage
-    if(this.props.match.params.purpose === 'deposit'){
-      localStorage.removeItem('fifty')
-      localStorage.removeItem('ten')
-      localStorage.removeItem('five')
-      localStorage.removeItem('one')
-    } else if(this.props.match.params.purpose === 'withdraw') {
-      localStorage.removeItem('withdraw_sum')
-    }
-  }
-
   render(){
     return(
       <div className="article">
-        { !this.props.info.contract === null && this._redirect() }
+        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
 
         <p className='checkAmount'>{this._checkPurpose()}</p>
 

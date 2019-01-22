@@ -4,25 +4,29 @@ import { withRouter } from 'react-router-dom'
 import '../css/IndexPage.css'
 
 class IndexPage extends Component {
+  constructor(props){
+    super(props)
+
+    this.userAddress = React.createRef()
+  }
+
+  _login = () => {
+    if(this.userAddress.current.value === '') console.log('Input your address')
+    else this.props.login(this.userAddress.current.value)
+  }
+
   render(){
     return(
       <div className="indexPage">
-        <p className="title">ATM</p>
+        <p className="title" onClick={this.props.init}>ATM</p>
         <p className="subTitle">BY BLOCKCHAIN</p>
         <div className='login'>
-          <div className="hole"></div>
-          <div className="card" onClick={this.props.login}>
-            <div className="arrow">↑</div>
-            <span>CARD</span>
+          <input className="hole" ref={this.userAddress} placeholder='Input your wallet address'></input>
+          <div className="card" onClick={this._login}>
+            <div className="arrow">↑&nbsp;</div>
+            <span>INSERT WALLET</span>
           </div>
         </div>
-        {/* <div className="pull">
-          {this.props.info.contract &&
-            <div onClick={this.props.logout}>
-              <span>카드 빼기</span>
-            </div>
-          }
-        </div> */}
       </div>
     )
   }

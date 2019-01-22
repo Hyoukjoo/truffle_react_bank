@@ -1,0 +1,19 @@
+.password {
+  display: inline-table;
+  text-align: left;
+  margin-top: 25px;
+  width: 325px;
+  height: 75px;
+  background-color: white;
+  border: 2px solid rgb(105, 105, 105);
+}
+
+.password span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding-left: 15px;
+  font-size: 50px;
+  letter-spacing: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+}
