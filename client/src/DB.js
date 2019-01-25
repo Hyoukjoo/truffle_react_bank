@@ -1,30 +1,34 @@
 export const USERS = [
   {
-    userBank: 'Truffle',
+    userBank: 'TRUFFLE',
     userName: 'Kane',
     password: '1234',
     etherAccount: '',
     balanceOf: 100000
   },
   {
-    userBank: 'Truffle',
+    userBank: 'TRUFFLE',
     userName: 'Trout',
     password: '1234',
     etherAccount: '',
-    balanceOf: 50000
+    balanceOf: 500000
   },
   {
-    userBank: 'Truffle',
+    userBank: 'TRUFFLE',
     userName: 'Kershow',
     password: '1234',
     etherAccount: '',
-    balanceOf: 30000
+    balanceOf: 300000
   },
   {
-    userBank: 'Truffle',
+    userBank: 'TRUFFLE',
     userName: 'Johnson',
     password: '1234',
     etherAccount: '',
-    balanceOf: 100000
+    balanceOf: 200000
   },
+]
+
+export const BANKS = [
+    'TRUFFLE', 'KB', 'WOORI', 'SINHAN', 'KAKAO', 'K BANK', 'IDK', 'SC', 'CITY', 'KEB'
 ]

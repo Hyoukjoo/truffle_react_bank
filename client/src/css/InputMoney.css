@@ -1,7 +1,10 @@
 .billDiv {
   display: inline-block;
   width: 300px;;
+}
 
+.billDiv .guidance {
+  margin-top: 40px;
 }
 
 .bill {
@@ -17,6 +20,9 @@
   text-align: center;
   font-size: 30px;
   font-family: 'Do Hyeon', sans-serif;
+}
+.billBoxDiv {
+  margin-top: 40px;
 }
 
 .billBox {

@@ -5,29 +5,28 @@ import '../css/ListPage.css'
 
 class ListPage extends Component {
 
-  componentDidUpdate = () => {
-    console.log("Listpage_componentUpdate :", this.props.info)
-  }
-
   render(){
+    const { redirect, logout } = this.props
+    const isLogin = localStorage.getItem('isLogin')
+
     return (
       <div className="ListPage">
-        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
+        {isLogin !== "true" && redirect()}
 
         <div className="list">
           <Link to="/inputmoney">입  금</Link>
         </div>
         <div className="list">
-          <Link to="/checkpassword">출  금</Link>
+          <Link to="/checkpassword/withdraw">출  금</Link>
         </div>
         <div className="list">
-          <Link to="/">송  금</Link>
+          <Link to="/checkpassword/remit">송  금</Link>
         </div>
         <div className="list">
           <Link to="/">조  회</Link>
         </div>
         <div className="list pull">
-          <Link to="#" onClick={this.props.logout}>취  소</Link>
+          <Link to="#" onClick={logout}>취  소</Link>
         </div>
       </div>
     )

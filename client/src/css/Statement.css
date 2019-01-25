@@ -4,10 +4,11 @@
   width: 250px;
   height: 350px;
   border: 1px solid black;
+  background-color: white;
 }
 
 .statementTitle {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 40px;
@@ -21,7 +22,10 @@
   margin-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;
-  width: 210px;
+  width: 220px;
   font-size: 15px;
+}
 
+.count {
+  margin-top: 20px;
 }

@@ -1,6 +1,6 @@
 .checkAmount {
   display: inline-block;
-  margin-top: 80px;
+  margin-top: 90px;
   font-size: 30px;
   font-family: 'Do Hyeon', sans-serif;
 }
@@ -8,7 +8,7 @@
 .amount {
   display: inline-table;
   text-align: left;
-  margin-top: 25px;
+  margin-top: 20px;
   padding-left: 5%;
   width: 300px;
   height: 75px;
@@ -24,33 +24,37 @@
 }
 
 .submitDiv {
-  display: inline-table;
-  margin-top: 20%;
+  display: inline-block;
+  width: 400px;
 }
 
-.submit {
-  display: table-cell;
-  vertical-align: middle;
-  margin: 5px;
+.submit .submitDiv {
+  margin-top: 100px;
+}
+
+.submitButton {
+  display: inline-table;
+  margin-right: 10px;
+  margin-left: 10px;
   width: 150px;
   height: 50px;
   cursor: pointer;
 }
 
 .confirmButton {
-  background-color: rgb(76, 218, 88);
+  border: 2px solid rgb(0, 0, 0);
+  background-color: rgb(217, 243, 214);
 }
 
 .cancelButton {
-  background-color: rgb(231, 64, 64);
+  border: 2px solid rgb(0, 0, 0);
+  background-color: rgb(250, 225, 225);
 }
 
-.submit span {
+.submitButton span {
+  display: table-cell;
+  vertical-align: middle;
   text-align: center;
   font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
-}
-
-.space {
-  width: 25px;
 }

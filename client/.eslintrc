@@ -1,0 +1,8 @@
+{
+  "parser": "babel-eslint",
+  "extends" : "react-app",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "react/jsx-filename-extention" : 0
+  }
+}

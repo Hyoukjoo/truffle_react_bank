@@ -7,7 +7,7 @@ class Statement extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { count : 5, time : '' }
+    this.state = { count : 5, date : '', amount : '', balance : '' }
   }
 
   componentDidMount = () => {
@@ -15,46 +15,69 @@ class Statement extends Component {
     
     setTimeout(() => { 
       clearInterval(_showCount)
+      this.props.logout()
       this.props.history.push('/') 
     }, 5000)
 
-    this._getDate()
+    this.setState({
+      date : localStorage.getItem('date'),
+      amount : localStorage.getItem('amount'),
+      balance : localStorage.getItem('balance')
+    })
   }
-
-  componentWillUnmount = () => this.props.logout()
 
   _getCount = () => {
-    let _count = this.state.count
-    _count -= 1
-    this.setState({ count : _count })
+    let { count } = this.state
+    count -= 1
+    this.setState({ count })
   }
 
-  _getDate = () => {
-    const date = new Date()
-    const year = date.getFullYear()
-    const month = ("0" + (date.getMonth() + 1)).slice(-2)
-    const day = ("0" + date.getDate()).slice(-2)
-    const hours = ("0" + date.getHours()).slice(-2)
-    const minutes = ("0" + date.getMinutes()).slice(-2)
-    const seconds = ("0" + date.getSeconds()).slice(-2)
-    this.setState({ time : `${year}.${month}.${day} ${hours}:${minutes}:${seconds}` })
+  _getPurpose = () => {
+    const { purpose } = this.props.match.params
+    
+    switch (purpose) {
+      case 'deposit' : return '입금'
+      case 'withdraw' : return '출금'
+      case 'remit' : return '송금'
+      default : break
+    }
+  }
+
+  _getReceiverInfo = () => {
+    const receiver = localStorage.getItem('receiver')
+    const receiverAddress = localStorage.getItem('receiverAddress')
+
+    return (
+      <div>
+        <div className='statementItem'>수신계좌 : {receiverAddress}</div> 
+        <div className='statementItem'>수신인명 : {receiver}</div> 
+      </div>
+    )
   }
 
   render() {
+    const { _getPurpose, _getReceiverInfo } = this
+    const { count, date, amount, balance } = this.state
+    const { redirect } = this.props
+    const { purpose } = this.props.match.params
+    const isLogin = localStorage.getItem('isLogin')
+    const inThousandsAmount = amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    const inThousandsBalance = balance.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
     return(
-      <div className='statementDiv'>
-        {localStorage.getItem('isLogin') !== "true" && this.props.redirect()}
-
-        <div className='statementTitle'><span>명세서</span></div>
-        <div className='statementItem'>구분 : {this.props.match.params.purpose === 'deposit' ? '입금' : '출금'}</div>
-        <div className='statementItem'>날짜 : {this.state.time}</div>
-        {/* this.props.contract가 null이면 우선적으로 에러가 일어나 조건을 주고 있을 시에만 표현하도록 했다. */}
-        <div className='statementItem'>계좌 : {this.props.contract.address && this.props.contract.address }</div> 
-        <div className='statementItem'>금액 : {localStorage.getItem('amount').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-        <div className='statementItem'>수수료 : 0</div>
-        <div className='statementItem'>잔액 : {localStorage.getItem('balance').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
-
-        <p>{this.state.count}초 후에 종료됩니다.</p> 
+      <div>
+        <div className='statementDiv'>
+          {isLogin !== "true" && redirect()}
+  
+          <div className='statementTitle'><span>명세서</span></div>
+          <div className='statementItem'>[{_getPurpose()}]</div>
+          <div className='statementItem'>일시 : {date}</div>
+          <div className='statementItem'>요청금액 : {inThousandsAmount}</div>
+          <div className='statementItem'>거래후 잔액 : {inThousandsBalance}</div>
+          <div className='statementItem'>수수료 : 0</div>
+          {purpose === 'remit' && _getReceiverInfo()}
+        </div>
+          <div className='count'><span>{count}초 후에 종료됩니다.</span></div> 
       </div>
     )
   }

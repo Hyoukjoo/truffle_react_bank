@@ -25,3 +25,15 @@
   margin-right: 12.5px;
   margin-left: 12.5px;
 }
+
+.guidance {
+  display: inline-block;
+  margin-top: 20px; 
+  margin-bottom: 0px;
+  font-size: 30px; 
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.submitDiv {
+  margin-top: 35px;
+}

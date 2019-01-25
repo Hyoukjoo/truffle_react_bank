@@ -9,13 +9,15 @@ import Bank from './contracts/Bank.json'
 import IndexPage from './component/IndexPage'
 import ListPage from './component/ListPage'
 import InputMoney from './component/InputMoney'
-import Submit from './component/Submit'
 import OutputMoney from './component/OutputMoney'
+import Submit from './component/Submit'
 import Statement from './component/Statement'
+import CheckPassword from './component/CheckPassword';
+import Remit from './component/Remit';
+import EnterMoney from './component/EnterMoney';
 
 import "./css/App.css"
 import{ USERS } from './DB'
-import Check from './component/Check';
 
 class App extends Component {
   state = { web3: null, accounts: null, contract: null, balance: 0, user: ''}
@@ -42,20 +44,19 @@ class App extends Component {
       
       //Clear localStorage
       localStorage.clear()
-
-      //Set initial user informations in the contract
-      this._addUser()
-
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
         )
         console.log(error)
-      }
     }
+
+    //Set initial user informations in the contract
+    // this._addUser()
+  }
     
-  //Add user informations in the contract
+    //Add user informations in the contract
   _addUser = async () => {
     for(let i=0; i<USERS.length; i++){
       USERS[i].etherAccount = this.state.accounts[i+1]
@@ -118,39 +119,39 @@ class App extends Component {
   }
 
   render() {
+    const {_login, _logout, _redirectLogin, _addUser, state} = this
+
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>
     }
     return (
       <div className="App">
         <Switch>
-          <Route
-            exact path='/'
-            render={() => (<IndexPage info={this.state} login={this._login} init={this._addUser} />)}
+          <Route exact path='/'
+            render={() => (<IndexPage info={state} login={_login} init={_addUser} />)}
           />
-          <Route 
-            path="/listpage" 
-            render={() => (<ListPage info={this.state} logout={this._logout} redirect={this._redirectLogin} />)} 
+          <Route path="/listpage" 
+            render={() => (<ListPage info={state} logout={_logout} redirect={_redirectLogin} />)} 
           />
-          <Route 
-            path='/inputmoney' 
-            render={() => (<InputMoney logout={this._logout} redirect={this._redirectLogin} />)} 
+          <Route path='/inputmoney' 
+            render={() => (<InputMoney logout={_logout} redirect={_redirectLogin} />)} 
           />
-          <Route path='/checkpassword'
-            render={()=> (<Check info={this.state} logout={this._logout} redirect={this._redirectLogin} />)} 
+          <Route path='/checkpassword/:purpose'
+            render={()=> (<CheckPassword info={state} logout={_logout} redirect={_redirectLogin} />)} 
           />
           <Route path='/outputmoney'
-            render={() => (<OutputMoney logout={this._logout} redirect={this._redirectLogin} />)} 
+            render={() => (<OutputMoney logout={_logout} redirect={_redirectLogin} />)} 
           />
-          <Route 
-            path='/submit/:purpose' 
-            render={() => (<Submit info={this.state} logout={this._logout} redirect={this._redirectLogin} />)} 
+          <Route path='/submit/:purpose' 
+            render={() => (<Submit info={state} logout={_logout} redirect={_redirectLogin} />)} 
           />
-          <Route 
-            path='/statement/:purpose' 
-            render={() => (<Statement contract={this.state.contract} logout={this._logout} redirect={this._redirectLogin} />)} 
+          <Route path='/statement/:purpose' 
+            render={() => (<Statement contract={state.contract} logout={_logout} redirect={_redirectLogin} />)} 
           />
-          
+          <Route path='/remit' 
+            render={() => (<Remit info={state} logout={_logout} redirect={_redirectLogin} />)} />
+          <Route path='/entermoney/:purpose' 
+            render={() => (<EnterMoney logout={_logout} redirect={_redirectLogin} />)} />
         </Switch>
       </div>
     );
