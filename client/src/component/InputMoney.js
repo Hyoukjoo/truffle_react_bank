@@ -1,14 +1,10 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import '../css/InputMoney.css'
 
 class InputMoney extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { fifty: 0, ten: 0, five: 0, one: 0 }
-  }
+  state = { fifty: 0, ten: 0, five: 0, one: 0 }
 
   _addBill = amount => {
     const { fifty, ten, five, one } = this.state
@@ -36,6 +32,7 @@ class InputMoney extends Component {
 
   _subBill = amount => {
     const { fifty, ten, five, one } = this.state
+    
     switch (amount) {
       case 50000:
         if(fifty > 0) this.setState({ fifty : fifty - 1 })
@@ -60,30 +57,29 @@ class InputMoney extends Component {
 
   _submit = () => {
     const { fifty, ten, five, one } = this.state
+    const sum = fifty + ten + five + one 
 
-    if(one === 0 && five === 0 && ten === 0 && fifty === 0) console.log('돈을 넣으십쇼.')
+    if(sum === 0) console.log('돈을 넣으십쇼.')
     else {
-      localStorage.setItem('fifty', fifty)
-      localStorage.setItem('ten', ten)
-      localStorage.setItem('five', five)
-      localStorage.setItem('one', one)
-
+      const amount = fifty*50000 + ten*10000 + five*5000 + one*1000
+      localStorage.setItem('deposit_amount', amount)
       this.props.history.push('/submit/deposit')
     }
   }
 
   render() {
     const { one, five, ten, fifty } = this.state
-    const { redirect, logout } = this.props
+    const { logout } = this.props
     const { _submit, _addBill, _subBill } = this
-    const isLogin = localStorage.getItem('isLogin')
     
-
+    if(localStorage.getItem('isLogin') !== 'true') {
+      console.log('고객 정보가 없습니다.')
+      return <Redirect to='/' />
+    }
+    
     return (
-      <div>
+      <Fragment>
         <div className="billDiv">
-          {isLogin !== "true" && redirect()}
-
           <p className="guidance"> 입금할 금액을 넣어주세요 </p>
 
           <div className='billBoxDiv'>
@@ -133,7 +129,7 @@ class InputMoney extends Component {
             <span>취 소</span>
           </div>
         </div>
-      </div>
+      </Fragment>
     )
   }
 }

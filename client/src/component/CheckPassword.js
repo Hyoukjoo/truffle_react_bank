@@ -1,42 +1,44 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import '../css/CheckPassword.css'
 
 class CheckPassword extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = { password : '', count : 0 }
-  }
+  state = { password : '', count : 0 }
 
   _inputPassword = inputedNum => {
     const { password } = this.state
+
     if(password.length >= 4) console.log("비밀번호는 네자리입니다.")
     else this.setState({ password : password + inputedNum })
   }
 
   _subPassword = () => {
     const password = this.state.password.slice(0, -1)
+
     this.setState({ password })
   }
 
   _showPassword = length => {
     let coveredPassword = ''
+
     for(let i = 0; i < length; i++){
       coveredPassword += '*'
     }
+    
     return coveredPassword
   }
 
   _submit = async () => {
     let count = this.state.count
     const { purpose } = this.props.match.params
+    const { password } = this.state
+    const { contract, accounts } = this.props.info
 
-    if(this.state.password.length < 4) console.log('비밀번호는 네자리입니다.')
+    if(password.length < 4) console.log('비밀번호는 네자리입니다.')
     else {
       try{
-        await this.props.info.contract.checkPassword(this.state.password, { from : this.props.info.accounts[0] })
+        await contract.checkPassword(password, { from : accounts[0] })
         if(purpose === 'withdraw') this.props.history.push('/entermoney/withdraw')
         else if(purpose === 'remit') this.props.history.push('/remit')
       } catch(error) {
@@ -54,24 +56,20 @@ class CheckPassword extends Component {
 
   render(){
     const { password } = this.state
-    const { redirect, logout } = this.props
+    const { logout } = this.props
     const { _showPassword, _inputPassword, _subPassword, _submit } = this
-    const isLogin = localStorage.getItem('isLogin')
+    
+    if(localStorage.getItem('isLogin') !== 'true') {
+      console.log('고객 정보가 없습니다.')
+      return <Redirect to='/' />
+    }
 
     return (
-      <div>
-        {isLogin !== "true" && redirect()}
-
-        <p style={{ 
-          display:"inline-block", 
-          marginTop: "20px", marginBottom:"0", 
-          fontSize:"30px", 
-          fontFamily:"'Do Hyeon', sans-serif"}}> 비밀번호를 입력하세요 </p>
+      <Fragment>
+        <p className='guidance'> 비밀번호를 입력하세요 </p>
 
         <div className="password">
-          <span>
-            {_showPassword(password.length)}
-          </span>
+          <span>{_showPassword(password.length)}</span>
         </div>
 
         <div className="inputAmount">
@@ -99,7 +97,7 @@ class CheckPassword extends Component {
             <span>취 소</span>
           </div>
         </div>
-      </div>
+      </Fragment>
     )
   }
 }

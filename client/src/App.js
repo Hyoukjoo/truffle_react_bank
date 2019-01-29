@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
 import getWeb3 from './utils/getWeb3'
 import truffleContract from 'truffle-contract'
@@ -9,23 +8,24 @@ import Bank from './contracts/Bank.json'
 import IndexPage from './component/IndexPage'
 import ListPage from './component/ListPage'
 import InputMoney from './component/InputMoney'
-import OutputMoney from './component/OutputMoney'
 import Submit from './component/Submit'
 import Statement from './component/Statement'
-import CheckPassword from './component/CheckPassword';
-import Remit from './component/Remit';
-import EnterMoney from './component/EnterMoney';
+import CheckPassword from './component/CheckPassword'
+import Remit from './component/Remit'
+import EnterMoney from './component/EnterMoney'
 
 import "./css/App.css"
-import{ USERS } from './DB'
+import{ USERS } from './DB/DB'
+import ViewTransactions from './component/ViewTransactions';
 
 class App extends Component {
-  state = { web3: null, accounts: null, contract: null, balance: 0, user: ''}
-
-  static propTypes = {
-    balance: PropTypes.number
+  state = { 
+    web3: null, 
+    accounts: null, 
+    contract: null, 
+    userAddress: null
   }
-  
+
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
@@ -36,7 +36,9 @@ class App extends Component {
       
       // Deploy Contract
       const Contract = truffleContract(Bank)
+
       Contract.setProvider(web3.currentProvider)
+
       const instance = await Contract.deployed()
       
       // Set web3, accounts, contract in state
@@ -56,45 +58,47 @@ class App extends Component {
     // this._addUser()
   }
     
-    //Add user informations in the contract
-  _addUser = async () => {
-    for(let i=0; i<USERS.length; i++){
-      USERS[i].etherAccount = this.state.accounts[i+1]
-      const {userBank, userName, password, etherAccount, balanceOf} = USERS[i]
-      console.log("App_addUser : ", etherAccount)
-      await this.state.contract.addUser(userBank, userName, password, etherAccount, balanceOf, { from: this.state.accounts[0] })
-    }
-  }
-  
-  _getUser = async () => {
-    const user = await this.state.contract.getUser()
-    if(user === '') {
-      console.log("Input your address correctly")
-      this.props.history.push('/')
-    } else {
-      this.setState({ user : user })
-    }
-  }
-  
-  _getBalance = async () => {
-    const balance = await this.state.contract.getBalance()
-    this.setState({ balance : balance.words[0] })
-  }
+  //Add user informations in the contract
+  _initUser = async () => {  
+    const Kane = USERS.get('0xCA2a5fB5C0D024c2dE66482883C8C3E1f7AdE001')
+    const Trout = USERS.get('0x0A597b0FFF74f0c25Ca40463ec65ad4fe6796784')
+    const Kershow = USERS.get('0xF26ac7a182428C2A5059cfB4Faf6b2C162e7bf34')
+    const Johnson = USERS.get('0x01C9b80104ee4CFD48C065d18b9b10F220540446')
 
-  _login = async account => {
+    const userInfo = [ Kane, Trout, Kershow, Johnson ]
+
+    for(let i=0; i<userInfo.length; i++){
+      const {userBank, userName, password, userAddress, balanceOf} = userInfo[i]
+      
+      console.log("App_initUser : ", userAddress)
+      
+      await this.state.contract.addUser(userBank, userName, password, userAddress, balanceOf, { from: this.state.accounts[0] })
+    }
+  }
+  
+  _login = async address => {
+    const { contract, accounts } = this.state
+
     try{
       //Set user in the contract
-      await this.state.contract.setUser(account, { from: this.state.accounts[0] })
+      await contract.setUser(address, { from : accounts[0] })
 
-      //Get balance of user from the cantract
-      this._getUser()
-      this._getBalance()
+      const userName = await contract.getUserName()
 
-      //set balance in localStorage
-      localStorage.setItem('isLogin', "true")
+      const userAddress = address
 
-      this.props.history.push('/listpage')
+      this.setState({ userAddress })
 
+      if(userName === '') {
+        console.log("Input your address correctly")
+
+        this.props.history.push('/')
+      } else {
+        //set balance in localStorage
+        localStorage.setItem('isLogin', "true")
+  
+        this.props.history.push('/listpage')
+      }
     } catch(error) {
       console.log(error);
     }
@@ -105,7 +109,7 @@ class App extends Component {
     await this.state.contract.initUser({ from : this.state.accounts[0] })
 
     //Set the balance for null in state
-    this.setState({ balance : 0, user : ''})
+    this.setState({ balance : 0, userName : ''})
 
     //Clear localStorage
     localStorage.clear()
@@ -119,7 +123,7 @@ class App extends Component {
   }
 
   render() {
-    const {_login, _logout, _redirectLogin, _addUser, state} = this
+    const {_login, _logout, _redirectLogin, _initUser, state} = this
 
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>
@@ -128,7 +132,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route exact path='/'
-            render={() => (<IndexPage info={state} login={_login} init={_addUser} />)}
+            render={() => (<IndexPage info={state} login={_login} init={_initUser} />)}
           />
           <Route path="/listpage" 
             render={() => (<ListPage info={state} logout={_logout} redirect={_redirectLogin} />)} 
@@ -139,9 +143,6 @@ class App extends Component {
           <Route path='/checkpassword/:purpose'
             render={()=> (<CheckPassword info={state} logout={_logout} redirect={_redirectLogin} />)} 
           />
-          <Route path='/outputmoney'
-            render={() => (<OutputMoney logout={_logout} redirect={_redirectLogin} />)} 
-          />
           <Route path='/submit/:purpose' 
             render={() => (<Submit info={state} logout={_logout} redirect={_redirectLogin} />)} 
           />
@@ -149,12 +150,17 @@ class App extends Component {
             render={() => (<Statement contract={state.contract} logout={_logout} redirect={_redirectLogin} />)} 
           />
           <Route path='/remit' 
-            render={() => (<Remit info={state} logout={_logout} redirect={_redirectLogin} />)} />
+            render={() => (<Remit info={state} logout={_logout} redirect={_redirectLogin} />)} 
+          />
           <Route path='/entermoney/:purpose' 
-            render={() => (<EnterMoney logout={_logout} redirect={_redirectLogin} />)} />
+            render={() => (<EnterMoney logout={_logout} redirect={_redirectLogin} />)} 
+          />
+          <Route path='/viewtransactions'
+            render={() => (<ViewTransactions info={state} logout={_logout} redirect={_redirectLogin} />)}
+          />
         </Switch>
       </div>
-    );
+    )
   }
 } 
 

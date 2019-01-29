@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import '../css/Remit.css'
-import { BANKS } from '../DB'
+import { BANKS } from '../DB/DB'
 
 class Remit extends Component {
+  state = { bank : '', isBankList : false }
+
   constructor(props) {
     super(props)
-
-    this.state = {
-      bank : '',
-      isBankList : false
-    }
-
     this.addressInput = React.createRef()
   }
   
@@ -30,16 +26,21 @@ class Remit extends Component {
   
   _selectBank = bank => {
     this.setState({ bank, isBankList : false })
+
     localStorage.setItem('bank', bank)
   }
   
   _submit = async () => {
     const { bank } = this.state
-    const address = this.addressInput.current.value
+    const receiverAddress = this.addressInput.current.value
+    const { contract, accounts } = this.props.info
+
     try{
-      const receiver = await this.props.info.contract.checkAccount.call(bank, address, { from : this.props.info.accounts[0] })
-      localStorage.setItem('receiver', receiver)
-      localStorage.setItem('receiverAddress', address)
+      const receiverName = await contract.checkAccount.call(bank, receiverAddress, { from : accounts[0] })
+
+      localStorage.setItem('receiverName', receiverName)
+      localStorage.setItem('receiverAddress', receiverAddress)
+      
       this.props.history.push('/entermoney/remit')
     } catch(error) {
       console.log(error)
@@ -48,13 +49,16 @@ class Remit extends Component {
   }
   render() {
     const { bank, isBankList } = this.state
-    const { redirect, logout } = this.props
+    const {  logout } = this.props
     const { _getBankList, _submit } = this
-    const isLogin = localStorage.getItem('isLogin')
+
+    if(localStorage.getItem('isLogin') !== 'true') {
+      console.log('고객 정보가 없습니다.')
+      return <Redirect to='/' />
+    }
 
     return ( 
       <div className='remit'>
-        {isLogin !== "true" && redirect()}
         {isBankList === true ? _getBankList() : ''}
 
         <div className='selectBank' onClick={() => this.setState({ isBankList : true })}>
@@ -65,6 +69,7 @@ class Remit extends Component {
             ref={this.addressInput}
             className='addressInput' 
             placeholder='Input receiver wallet address' 
+            // onChange={() => {localStorage.setItem('receiverAddress', this.addressInput.current.value)}}
           ></input>
         </div>
 

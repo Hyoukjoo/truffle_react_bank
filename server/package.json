@@ -1,0 +1,13 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "HJ",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.17.1"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  }
+}

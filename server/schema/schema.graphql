@@ -1,0 +1,13 @@
+type Query {
+  transaction(): [Transaction!]
+}
+
+type Transaction {
+  purpose: String!
+  user: String!
+  date: String!
+  amount: Int!
+  charge: Int!
+  receiver: String
+  receiverAddress: String
+}

@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 
 import '../css/ListPage.css'
 
 class ListPage extends Component {
 
   render(){
-    const { redirect, logout } = this.props
-    const isLogin = localStorage.getItem('isLogin')
+    const { logout } = this.props
+
+    if(localStorage.getItem('isLogin') !== 'true') {
+      console.log('고객 정보가 없습니다.')
+      return <Redirect to='/' />
+    }
 
     return (
       <div className="ListPage">
-        {isLogin !== "true" && redirect()}
-
         <div className="list">
           <Link to="/inputmoney">입  금</Link>
         </div>
@@ -23,7 +25,7 @@ class ListPage extends Component {
           <Link to="/checkpassword/remit">송  금</Link>
         </div>
         <div className="list">
-          <Link to="/">조  회</Link>
+          <Link to="/viewtransactions">조  회</Link>
         </div>
         <div className="list pull">
           <Link to="#" onClick={logout}>취  소</Link>

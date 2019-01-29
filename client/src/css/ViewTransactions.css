@@ -1,0 +1,19 @@
+.transactionTable {
+  margin-top: 50px;
+  display: inline-table;
+  width: 400px;
+  height: 200px;
+}
+
+.transactionTable th, td {
+  padding-top: 5px;
+  padding-bottom: 0px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 25px;
+}
+
+.tableTitle {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 50px;
+  margin-bottom: 30px;
+}
