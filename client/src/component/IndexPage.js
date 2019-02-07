@@ -6,7 +6,6 @@ import '../css/IndexPage.css'
 class IndexPage extends Component {
   constructor(props){
     super(props)
-
     this.userAddress = React.createRef()
   }
 

@@ -13,10 +13,11 @@ import Statement from './component/Statement'
 import CheckPassword from './component/CheckPassword'
 import Remit from './component/Remit'
 import EnterMoney from './component/EnterMoney'
+import ViewTransactions from './component/ViewTransactions'
 
 import "./css/App.css"
-import{ USERS } from './DB/DB'
-import ViewTransactions from './component/ViewTransactions';
+import { USERS } from './DB/DB'
+import { Kane, Trout, Kershow, Johnson } from './DB/UserInfo'
 
 class App extends Component {
   state = { 
@@ -54,20 +55,31 @@ class App extends Component {
         console.log(error)
     }
 
+    const { accounts } = this.state
+
+    USERS.set(accounts[1], Kane)
+    USERS.set(accounts[2], Trout)
+    USERS.set(accounts[3], Kershow)
+    USERS.set(accounts[4], Johnson)
+
     //Set initial user informations in the contract
     // this._addUser()
   }
     
   //Add user informations in the contract
   _initUser = async () => {  
-    const Kane = USERS.get('0xCA2a5fB5C0D024c2dE66482883C8C3E1f7AdE001')
-    const Trout = USERS.get('0x0A597b0FFF74f0c25Ca40463ec65ad4fe6796784')
-    const Kershow = USERS.get('0xF26ac7a182428C2A5059cfB4Faf6b2C162e7bf34')
-    const Johnson = USERS.get('0x01C9b80104ee4CFD48C065d18b9b10F220540446')
+    const { accounts } = this.state
+
+    const Kane = USERS.get(accounts[1])
+    const Trout = USERS.get(accounts[2])
+    const Kershow = USERS.get(accounts[3])
+    const Johnson = USERS.get(accounts[4])
 
     const userInfo = [ Kane, Trout, Kershow, Johnson ]
 
     for(let i=0; i<userInfo.length; i++){
+      userInfo[i].userAddress = accounts[i+1]
+
       const {userBank, userName, password, userAddress, balanceOf} = userInfo[i]
       
       console.log("App_initUser : ", userAddress)

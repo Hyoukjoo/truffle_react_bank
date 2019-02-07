@@ -5,9 +5,58 @@ import { getTransaction } from '../DB/DB'
 import '../css/ViewTransactions.css'
 
 class ViewTransactions extends Component {
+  constructor(props){
+    super(props)
+    
+    const { userAddress } = props.info
+    let transaction = null
+
+    if(userAddress !== null) {
+      transaction = getTransaction(userAddress)
+    } else {
+      props.history.push('/')
+    }
+
+    this.state = { pageNumber : 0, transaction }
+  }
+
+  showPage = () => {
+    const { transaction, pageNumber } = this.state
+    const showNumber = pageNumber
+    let showTransactions = []
+
+    for(let i = pageNumber; i < showNumber + 4; i++){
+      if(transaction[i] !== undefined) showTransactions.push(transaction[i])
+      else break
+    }
+
+    return showTransactions
+  }
+
+  pageButton = arrow => {
+    let { pageNumber, transaction } = this.state
+
+    if(arrow === 'up'){
+      if(pageNumber - 4 < 0) console.log('첫 거래내역입니다.')
+      else {
+        pageNumber -= 4
+        this.setState({ pageNumber })
+        this.showPage()
+      }
+    }else if(arrow === 'down'){
+      if(pageNumber + 4 >= transaction.length) console.log('거래내역이 더 존재하지 않습니다.')
+      else {
+        pageNumber += 4
+        this.setState({ pageNumber })
+        this.showPage()
+      }
+    }
+  }
+
   render() {
     const { userAddress } = this.props.info
     const { logout } = this.props
+    const { showPage, pageButton } = this
 
     let transactions = undefined
 
@@ -15,7 +64,7 @@ class ViewTransactions extends Component {
       console.log('고객 정보가 없습니다.')
       return <Redirect to='/' />
     } else {
-      transactions = getTransaction(userAddress)
+      transactions = showPage()
     }
 
     return (
@@ -24,11 +73,11 @@ class ViewTransactions extends Component {
           <caption className='tableTitle'>거래 내역</caption>
           <thead>
             <tr>
-              <th>날짜</th>
-              <th>내용</th>
-              <th>출금</th>
-              <th>입금</th>
-              <th>잔액</th>
+              <td>날짜</td>
+              <td>내용</td>
+              <td>출금</td>
+              <td>입금</td>
+              <td>잔액</td>
             </tr>
           </thead>
           <tbody>
@@ -39,8 +88,8 @@ class ViewTransactions extends Component {
             const inThousandsBalance = balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
             return (
-              <Fragment>
-                <tr key={index}>
+              <Fragment key={index}>
+                <tr className='transaction'>
                   <td>{`${splitedDate[1]}/${splitedDate[2]}`}</td>
                   <td>{purpose}</td>
                   <td>
@@ -62,7 +111,11 @@ class ViewTransactions extends Component {
           })}
           </tbody>
         </table>
-        <div className="submitDiv">
+        <div className='pageButtonDiv'>
+          <div className='pageButton' onClick={() => pageButton('up')}><span>△</span></div>
+          <div className='pageButton' onClick={() => pageButton('down')}><span>▽</span></div>
+        </div>
+        <div className="transactionSubmitDiv">
           <div className="submitButton confirmButton" onClick={logout}>
             <span>확 인</span>
           </div>

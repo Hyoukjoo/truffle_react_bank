@@ -2,7 +2,7 @@
   margin-top: 50px;
   display: inline-table;
   width: 400px;
-  height: 200px;
+  height: auto;
 }
 
 .transactionTable th, td {
@@ -16,4 +16,51 @@
   font-family: 'Do Hyeon', sans-serif;
   font-size: 50px;
   margin-bottom: 30px;
+}
+
+.transaction{
+  vertical-align: top;
+  height: 30px;
+  padding: 0px;
+}
+
+.transactionSubmitDiv {
+  position: absolute;
+  margin-left: 100px;
+  margin-right: 100px;
+  width: 300px;
+  bottom: 50px;
+}
+
+.transactionSubmitDiv .submitButton {
+  display: inline-table;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.pageButtonDiv {
+  position: absolute;
+  margin-right: 150px;
+  margin-left: 150px;
+  width: 200px;
+  height: 50px;
+  bottom: 100px;
+}
+
+.pageButton {
+  display: inline-table;
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.pageButton span {
+  display: table-cell;
+  vertical-align: middle;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 30px;
 }

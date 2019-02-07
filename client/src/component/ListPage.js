@@ -4,7 +4,6 @@ import { Link, withRouter, Redirect } from 'react-router-dom'
 import '../css/ListPage.css'
 
 class ListPage extends Component {
-
   render(){
     const { logout } = this.props
 
