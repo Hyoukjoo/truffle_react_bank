@@ -13,7 +13,7 @@ class Statement extends Component {
       clearInterval(_showCount)
 
       this.props.logout()
-    }, 0)
+    }, 3000)
 
     this.setState({
       date : localStorage.getItem('date'),
