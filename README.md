@@ -1,7 +1,7 @@
 ## TRUFFLE과 REACT를 이용한 ATM 구현
 #### - 개요 : 블록체인을 이용하여 ATM 기능을 구현, 실제 ATM 기기와 최대한 같도록 구현
 #### - 사용기술  
-  - BACKEND : NODEJS, GANACHE-CLI, WEB3, SOLIDITY 
+  - BACKEND : NODEJS, GANACHE-CLI, SOLIDITY 
   - FRONTEND : JAVASCRIPT
   - FRAMEWORK : TRUFFLE, REACT
 #### - 주요기능 
@@ -29,7 +29,7 @@
   - 블록체인을 통해 저비용으로 거래의 신뢰를 보장
 #### - 보완점
   - DB 연동
-  - 보안성 취약
   - reject를 consolo이 아닌 다른 방법으로 구현 
+  - 유저의 private key를 이용하여 접근하도록 구현
 #### - 동영상(Click)
   [![동영상 LINK](https://img.youtube.com/vi/5__ZYqnjHRQ/0.jpg)](https://youtu.be/5__ZYqnjHRQ/?target=_blank)
