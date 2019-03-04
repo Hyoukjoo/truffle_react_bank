@@ -29,7 +29,7 @@
   - 블록체인을 통해 저비용으로 거래의 신뢰를 보장
 #### - 보완점
   - DB 연동
-  - reject를 consolo이 아닌 다른 방법으로 구현 
+  - reject를 가시적으로  
   - 유저의 private key를 이용하여 접근하도록 구현
 #### - 동영상(Click)
   [![동영상 LINK](https://img.youtube.com/vi/5__ZYqnjHRQ/0.jpg)](https://youtu.be/5__ZYqnjHRQ/?target=_blank)
