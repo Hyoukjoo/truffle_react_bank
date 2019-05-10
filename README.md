@@ -1,9 +1,10 @@
 ## 블록체인을 활용한 ATM 구현
 #### - 개요 : TRUFFLE과 REACT를 활용하여 실제 ATM 기능 구현
 #### - 사용기술  
-  - BACKEND : GANACHE-CLI, SOLIDITY, ETHEREUM
+  - BACKEND : GANACHE-CLI, ETHEREUM
   - FRONTEND : JAVASCRIPT
   - FRAMEWORK : TRUFFLE, REACT
+  - SMART CONTRACT : SOLIDITY
 #### - 주요기능 
   - BANK-CONTRACT : ATM 기능을 블록체인으로 구현
   - LOGIN : contract에 등록되어 있는 유저의 이더리움 account 주소를 입력하여 ATM에 접근
