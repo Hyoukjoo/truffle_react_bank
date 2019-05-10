@@ -62,8 +62,6 @@ class App extends Component {
     USERS.set(accounts[3], Kershow)
     USERS.set(accounts[4], Johnson)
 
-    //Set initial user informations in the contract
-    // this._addUser()
   }
     
   //Add user informations in the contract
