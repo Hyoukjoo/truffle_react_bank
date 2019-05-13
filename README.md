@@ -1,5 +1,5 @@
 ## 블록체인을 활용한 ATM 구현
-#### - 개요 : TRUFFLE과 REACT를 활용하여 ATM 기능 구현
+#### - 개요 :  TRUFFLE과 REACT를 활용하여 SMART CONTRACT로 동작하는 ATM 개발
 #### - 사용기술  
   - BACKEND : GANACHE-CLI, ETHEREUM
   - FRONTEND : JAVASCRIPT
