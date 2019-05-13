@@ -28,9 +28,9 @@
     2. 4건마다 페이징 처리 
 #### - 기대효과
   - 블록체인을 통해 저비용으로 거래의 신뢰를 보장
-#### - 보완점
-  - DB 연동
-  - reject를 가시적으로  
-  - 유저의 private key를 이용하여 접근하도록 구현
+#### - ISSUES
+  - DEVELOP WEB SERVER(웹 서버 )
+  - CONNECT DATABASE(데이터베이스 연동)
+  - ENHANCE AUTHENTICATION(로그인 보안 강화)
 #### - 동영상(Click)
   [![동영상 LINK](https://img.youtube.com/vi/5__ZYqnjHRQ/0.jpg)](https://youtu.be/5__ZYqnjHRQ/?target=_blank)
